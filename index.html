@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="input-city" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="w-search" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="w-icon" src="https://openweathermap.org/img/wn/02d@2x.png" width="120" height="120" alt="">
+            <h1 id="city-name">Dhaka</h1>
+            <h3><span id="temp">38.06</span>&deg;C</h3>
+            <h1 id="sky" class="lead">Clouds</h1>
+            <script>
+                document.getElementById('w-search').addEventListener('click', function () {
+                    const cityName = document.getElementById('input-city').value;
+                    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=539a002aeb5de260665fb2049084a1ed")
+                        .then(response => response.json())
+                        .then(data => {
+                            const name = data.name;
+                            document.getElementById('city-name').innerText = name;
+
+                            const temp = data.main.temp;
+                            const degree = temp - 273.15;  // 273.15 is kelvin;
+                            document.getElementById('temp').innerText = degree.toFixed(2);
+
+                            const sky = data.weather[0].main;
+                            document.getElementById('sky').innerText = sky;
+
+                            const icon = data.weather[0].icon;
+                            const weather = "https://openweathermap.org/img/wn/" + icon + ".png";
+                            document.getElementById('w-icon').src = weather;
+                        })
+                })
+
+            </script>
+        </div>
+    </div>
+
+</body>
+
+</html>
