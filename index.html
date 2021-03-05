@@ -53,6 +53,11 @@
                             const weather = "https://openweathermap.org/img/wn/" + icon + ".png";
                             document.getElementById('w-icon').src = weather;
                         })
+                        .catch(error =>{
+                            document.getElementById('city-name').innerText = "error name";
+                            document.getElementById('temp').innerText = "error";
+                            document.getElementById('sky').innerText = "error";
+                        })
                 })
 
             </script>
